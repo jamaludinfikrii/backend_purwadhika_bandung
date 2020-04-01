@@ -1,21 +1,27 @@
 // Built In Module (library)
-const os = require('os')
 
-var namaCPU = os.hostname();
-var osTipe = os.type();
-var osPlatform = os.platform();
-var osRilis = os.release();
-var dirAwal = os.homedir();
-var ramSisa = os.freemem();
-var ramTotal = os.totalmem();
+// URL Module
+const url = require('url')
+const fs = require('fs')
+const chalk = require('chalk')
 
-console.log(namaCPU)
-console.log(osTipe)
-console.log(osPlatform)
-console.log(osRilis)
-console.log(dirAwal)
-console.log(ramSisa)
-console.log(ramTotal)
+const link = 'https://nodejs.org/api/os.html'
+
+const link_2 = 'https://localhost:3000/product-detail/4'
+
+
+const x = url.parse(link)
+const y = url.parse(link_2)
+
+
+console.log(x)
+console.log(y.pathname.split('/')[2])
+
+
+
+console.log(chalk.blue('hello world'))
+console.log(chalk.yellow('hello saya fikri'))
+
 
 
 // npm init
