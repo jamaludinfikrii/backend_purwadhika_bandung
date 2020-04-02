@@ -1,8 +1,8 @@
 const express = require('express')
-
-// babel 
 const app = express()
 const port = 8888
+
+// API ==> Express js
 
 const mysql = require('mysql')
 const conn = mysql.createConnection({
@@ -14,9 +14,9 @@ const conn = mysql.createConnection({
 })
 
 
-
+// buat nangkep data dari req.body
 app.use(express.json()) 
-// initial route
+
 
 
 
@@ -25,6 +25,8 @@ app.use(express.json())
  // POST ==> CREATE DATA
  // DELETE ==> DELETE DATA
  // PATCH  ==> UPDATE DATA
+
+//  CRUD 
 
 
 
@@ -110,6 +112,10 @@ app.get('/get-guru-by-gender' , (req,res) => {
         })
     })
 })
+
+
+
+
 
 
 // CRUD
