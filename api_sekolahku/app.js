@@ -108,9 +108,9 @@ app.post('/addnewguru' , (req,res) => {
 
 // UPDATE 
 
-app.patch('/editdataguru/:paramid' , (req,res) => {
+app.patch('/editdataguru/:id' , (req,res) => {
     let data = req.body
-    let id = req.params.paramid
+    let id = req.params.id
     let sql = 'update guru set ? where id = ?'
 
     db.query(sql,[data , id], (err,result) => {
@@ -168,6 +168,8 @@ app.delete('/deletegurubyid/:id' , (req,res) => {
     })
 })
 
+
+// 
 
 
 
