@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const db = require('./3_databases/mysql')
 const routerGuru = require('./2_routers/guru')
+const routerPelajaran = require('./2_routers/pelajaran')
 
 // Setting Express And JSON Parser dan cors
 const port = 4000
@@ -18,6 +19,7 @@ app.get('/' , (req,res) => {
 
 
 app.use('/guru' , routerGuru)
+app.use('/pelajaran',routerPelajaran )
  
 
 

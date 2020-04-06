@@ -11,5 +11,3 @@ Router.delete('/deletegurubyid/:id' , Controller.deleteGuru)
 
 module.exports = Router
 
-
-'localhost:4000/guru/deletegurubyid'
