@@ -60,6 +60,10 @@ const postData = (req,res) => {
 
 }
 
+// REQ.PARAMS /id
+// REQ.QUERY ?nama='fikri'
+// REQ.BODY parameter kedua kirim object
+
 const updateAllColumns = (req,res) => {
     const sql = 'update pelajaran set nama=?, gender = ?, age = ? where id = ?'
     db.query(sql,[req.body.nama,req.body.gende])
@@ -73,11 +77,12 @@ WHERE some_column=some_value
 }
 
 const updateOneColumn = (req,res) => {
-
+    const sql = 'update pelajaran set ?'
+    db.query(sql,req.body)
 }
 
 const deleteData = (req,res) => {
-
+    const sql = 'delete from pelajaran where id = ?'
 }
 
 
