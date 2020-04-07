@@ -1,4 +1,6 @@
 const db = require('./../3_databases/mysql')
+const fileUpload = require('./../helpers/fileUpload')
+
 
 
 const getAllProducts = (req,res) => {
@@ -47,8 +49,17 @@ getProductById = (req,res) => {
 
 
 const postNewProduct = (req,res) => {
-    console.log(req.file)
-    console.log(req.files)
+    console.log('masuk')
+    const upload =  fileUpload.array('product-image')
+    upload(req,res,(err) => {
+        try{
+            if(err) throw err
+            console.log(req.files)
+
+        }catch(err){
+
+        }
+    })
     // post multiple image to api
     // post ke dua table ==> product & product_image
 }
