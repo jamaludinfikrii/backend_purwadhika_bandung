@@ -57,7 +57,7 @@ const postNewProduct = (req,res) => {
             console.log(req.files)
 
         }catch(err){
-
+            console.log(err)
         }
     })
     // post multiple image to api
