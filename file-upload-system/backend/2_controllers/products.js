@@ -1,5 +1,6 @@
 const db = require('./../3_databases/mysql')
 const fileUpload = require('./../helpers/fileUpload')
+const fs = require('fs')
 
 
 
@@ -50,13 +51,39 @@ getProductById = (req,res) => {
 
 const postNewProduct = (req,res) => {
     console.log('masuk')
-    const upload =  fileUpload.array('product-image')
+    const upload =  fileUpload.array('product-images')
     upload(req,res,(err) => {
         try{
+            let isFailed = false
             if(err) throw err
-            console.log(req.files)
+            req.files.forEach((file) => {
+                // check each file size
+                if(file.size > 1000000){
+                    isFailed = true
+                }
+
+                // check each file type
+                if(!file.mimetype.includes('image')){
+                    isFailed = true
+                }
+            })
+
+            if(isFailed){
+                // delete all failed file
+                req.files.forEach((file) => {
+                    fs.unlinkSync(file.path)
+                })
+                throw {error : true , message : "all file must be image and below 1 mb"}
+            }else{
+                console.log(req.files)
+
+            }
+
+
+            
 
         }catch(err){
+            res.json(err)
             console.log(err)
         }
     })

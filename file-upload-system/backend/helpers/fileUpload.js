@@ -4,7 +4,7 @@ const storageOptions = multer.diskStorage({
         cb(null, 'public/')
     },
     filename : (req,file,cb) => {
-        console.log(file)
+        // console.log(file)
         cb(null, 'PRD-IMG-' + Date.now() + '.' + file.mimetype.split('/')[1])
     }
 })
