@@ -76,6 +76,68 @@ const postNewProduct = (req,res) => {
                 throw {error : true , message : "all file must be image and below 1 mb"}
             }else{
                 console.log(req.files)
+                let data = req.body.data
+                console.log(data)
+                data = JSON.parse(data)
+                console.log(data)
+
+
+                // post data to databases
+
+                // post product name and price to products table
+                let sql_1 = 'insert into products set ?'
+                db.query(sql_1,data,(err,result) => {
+                    try{    
+                        if(err) throw err
+
+                        console.log(result.insertId)
+
+                        // looping to make array of object
+                        let dataProductImages = req.files.map((file) => {
+                            return{
+                                image_url : file.path,
+                                id_product : result.insertId
+                            }
+                        })
+
+                        console.log(dataProductImages)
+
+                        // looping for generate query multiple insert
+                        let sql_2 = 'insert into product_images (image_url,id_product) values'
+                        dataProductImages.forEach((data,index) => {
+                            if(index === dataProductImages.length -1){
+                                sql_2 += `("${data.image_url}" , ${data.id_product});`
+                            }else{
+                                sql_2 += `("${data.image_url}" , ${data.id_product}),`
+                            }
+                        })
+
+                        // post multiple data image url to product images
+                        db.query(sql_2 , (err,result) =>{
+                            try{
+                                if(err) throw err
+                                res.json({
+                                    error : false,
+                                    message : "product successfully added"
+                                })
+                            }catch(err){
+                                res.json({
+                                    error : true,
+                                    message : err.message
+                                })
+                            }
+                        })
+
+                       
+                       
+
+                    }catch(err){
+                        res.json({
+                            error : true,
+                            message : err.message
+                        })
+                    }
+                })
 
             }
 
@@ -89,6 +151,7 @@ const postNewProduct = (req,res) => {
     })
     // post multiple image to api
     // post ke dua table ==> product & product_image
+
 }
 
 module.exports = {
