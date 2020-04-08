@@ -3,6 +3,12 @@ const fileUpload = require('./../helpers/fileUpload')
 const fs = require('fs')
 
 
+function convertPath(param) {
+    var path = param.split('public')
+    path[0] = 'public/'
+    return path.join('')
+}
+
 
 const getAllProducts = (req,res) => {
     const sql = `select p.id as product_id, name, price, created_at, i.id as image_id, image_url 
@@ -93,26 +99,34 @@ const postNewProduct = (req,res) => {
                         console.log(result.insertId)
 
                         // looping to make array of object
-                        let dataProductImages = req.files.map((file) => {
-                            return{
-                                image_url : file.path,
-                                id_product : result.insertId
-                            }
-                        })
+                        // let dataProductImages = req.files.map((file) => {
+                        //     return{
+                        //         image_url : file.path,
+                        //         id_product : result.insertId
+                        //     }
+                        // })
 
-                        console.log(dataProductImages)
+                        // console.log(dataProductImages)
 
                         // looping for generate query multiple insert
                         let sql_2 = 'insert into product_images (image_url,id_product) values'
-
-                        
-                        dataProductImages.forEach((data,index) => {
-                            if(index === dataProductImages.length -1){
-                                sql_2 += `("${data.image_url}" , ${data.id_product});`
+                        req.files.forEach((file,index) => {
+                            if(index === req.files.length -1){
+                                sql_2 += `("${convertPath(file.path)}" , ${result.insertId});`
                             }else{
-                                sql_2 += `("${data.image_url}" , ${data.id_product}),`
+                                sql_2 += `("${convertPath(file.path)}" , ${result.insertId}),`
                             }
                         })
+
+                        console.log(sql_2)
+                        
+                        // dataProductImages.forEach((data,index) => {
+                        //     if(index === dataProductImages.length -1){
+                        //         sql_2 += `("${data.image_url}" , ${data.id_product});`
+                        //     }else{
+                        //         sql_2 += `("${data.image_url}" , ${data.id_product}),`
+                        //     }
+                        // })
 
                         // post multiple data image url to product images
                         db.query(sql_2 , (err,result) =>{

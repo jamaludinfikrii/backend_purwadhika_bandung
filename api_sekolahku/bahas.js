@@ -9,3 +9,13 @@ const newArr = array.map((val) => {
 })
 
 console.log(newArr)
+
+
+
+var path = 'public\PRD-IMG-1586332301582.jpeg'
+
+function convertPath(path) {
+    path = path.split('public')
+    path[0] = 'public/'
+    return path.join('')
+}

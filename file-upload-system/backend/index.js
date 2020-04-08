@@ -15,6 +15,8 @@ app.use(cors())
 
 app.use('/product' , productRouter)
 
+app.use('/public' , express.static('public'))
+
 
 
 
