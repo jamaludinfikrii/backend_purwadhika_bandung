@@ -2,29 +2,33 @@ import React from 'react';
 import './App.css';
 import Axios from 'axios'
 class App extends React.Component{
+
+
   onBtnSubmitClick = () => {
     let name = this.refs.name.value
     let price = Number(this.refs.price.value)
     let images = this.refs.images.files
     let data = {
-      name,price
+      name : name,
+      price : price
     }
 
-    let dataImages = []
-    for(var i = 0; i < images.length ; i ++){
-      dataImages.push(images[i])
-    }
-    console.log(dataImages)
+    console.log(images)
+
+    
     data = JSON.stringify(data)
     console.log(data)
     if(name && price && images){
       let fd = new FormData()
-      fd.append('product-images' , dataImages)
+      for(let i = 0 ; i< images.length ; i ++){
+        fd.append('product-images' , images[i])
+      }
       fd.append('data' , data )
+      console.log(fd)
 
       Axios.post('http://localhost:4000/product', fd )
       .then((res) => {
-        console.log(res)
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err)
