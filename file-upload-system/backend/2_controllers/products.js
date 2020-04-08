@@ -104,6 +104,8 @@ const postNewProduct = (req,res) => {
 
                         // looping for generate query multiple insert
                         let sql_2 = 'insert into product_images (image_url,id_product) values'
+
+                        
                         dataProductImages.forEach((data,index) => {
                             if(index === dataProductImages.length -1){
                                 sql_2 += `("${data.image_url}" , ${data.id_product});`
@@ -153,6 +155,9 @@ const postNewProduct = (req,res) => {
     // post ke dua table ==> product & product_image
 
 }
+
+
+
 
 module.exports = {
     getAllProducts,
