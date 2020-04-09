@@ -16,15 +16,18 @@ class PostNewProduct extends React.Component{
 
     console.log(images)
 
-    
+    // convert object to string
     data = JSON.stringify(data)
     console.log(data)
+
+    // check if there is null value
     if(name && price && images){
       let fd = new FormData()
       for(let i = 0 ; i< images.length ; i ++){
+        // fd.append 'fieldname' , 'value / file / text' 
         fd.append('product-images' , images[i])
       }
-      fd.append('data' , data )
+      fd.append('productData' , data )
       console.log(fd)
 
       Axios.post('http://localhost:4000/product', fd )
@@ -52,7 +55,7 @@ class PostNewProduct extends React.Component{
       <div className='container pt-5'>
         <div className='row justify-content-center'> 
           <div className='col-md-4 card'>
-            <h5 class="card-title">Post Product</h5>
+            <span className="card-title text-center">Post Product</span>
             <div className='card-body'>
               <input type='text' ref='name' placeholder='Product Name' className='form-control' />
               <input type='number' ref='price' placeholder='Product Price' className='form-control  mt-3' />

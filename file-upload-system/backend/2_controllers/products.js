@@ -3,11 +3,11 @@ const fileUpload = require('./../helpers/fileUpload')
 const fs = require('fs')
 
 
-function convertPath(param) {
-    var path = param.split('public')
-    path[0] = 'public/'
-    return path.join('')
-}
+// function convertPath(param) {
+//     var path = param.split('public')
+//     path[0] = 'public/'
+//     return path.join('')
+// }
 
 
 const getAllProducts = (req,res) => {
@@ -81,9 +81,11 @@ const postNewProduct = (req,res) => {
                 })
                 throw {error : true , message : "all file must be image and below 1 mb"}
             }else{
-                console.log(req.files)
-                let data = req.body.data
+                // console.log(req.files)
+                let data = req.body.productData
                 console.log(data)
+
+                // convert string to object
                 data = JSON.parse(data)
                 console.log(data)
 
@@ -112,9 +114,9 @@ const postNewProduct = (req,res) => {
                         let sql_2 = 'insert into product_images (image_url,id_product) values'
                         req.files.forEach((file,index) => {
                             if(index === req.files.length -1){
-                                sql_2 += `("${convertPath(file.path)}" , ${result.insertId});`
+                                sql_2 += `("${file.path}" , ${result.insertId});`
                             }else{
-                                sql_2 += `("${convertPath(file.path)}" , ${result.insertId}),`
+                                sql_2 += `("${file.path}" , ${result.insertId}),`
                             }
                         })
 
