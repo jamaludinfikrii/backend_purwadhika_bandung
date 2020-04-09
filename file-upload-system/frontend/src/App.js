@@ -4,6 +4,7 @@ import PostNewProduct from './pages/PostNewProduct';
 import Navbar from './components/Navbar'
 import {BrowserRouter , Route} from 'react-router-dom'
 import Products from './pages/ListProducts'
+import ProductDetail from './pages/ProductDetail';
 class App extends React.Component{
 
   render(){
@@ -18,12 +19,13 @@ class App extends React.Component{
           <Route path='/products'>
             <Products /> 
           </Route>
-          {/* <Route path='/product-detail/:id'>
+          <Route path='/product-detail'>
             <ProductDetail /> 
-          </Route> */}
+          </Route>
           <Route path='/post-product'>
             <PostNewProduct /> 
           </Route>
+ 
         </BrowserRouter>
       </div>
 
