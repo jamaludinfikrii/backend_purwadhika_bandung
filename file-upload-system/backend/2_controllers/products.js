@@ -43,7 +43,7 @@ getProductById = (req,res) => {
             if(err) throw err
             res.json({
                 error : false,
-                data : result[0]
+                data : result
             })
         }catch(err){
             res.json({
@@ -173,10 +173,52 @@ const postNewProduct = (req,res) => {
 }
 
 
+const deleteImageById = (req,res) => {
+    const id = req.params.id
+    let sql = 'select image_url from product_images where id = ?'
+    db.query(sql,id,(err,result) => {
+        try{
+            if(err) throw err
+            fs.unlinkSync(result[0].image_url)
+            sql = 'delete from product_images where id = ?'
+            db.query(sql,id,(err,result) => {
+                try{
+                    if(err) throw err
+                    res.json({
+                        error : false,
+                        message : "Delete Image Success"
+                    })
+                }catch(err){
+                    res.json({
+                        error : true,
+                        message : err.message
+                    })
+                }
+            })
+        }catch(err){    
+            res.json({
+                error : true,
+                message : err.message
+            })
+        }   
+    })
+    // delete url_image di database
+    // delete image nya di api
+}
+
+
+const editImageById = (req,res) => {
+    // edit image_url di database
+    // post image ke api
+    // delete old image from api
+}
+
+
 
 
 module.exports = {
     getAllProducts,
     getProductById,
-    postNewProduct
+    postNewProduct,
+    deleteImageById
 }

@@ -2,8 +2,9 @@ import React from 'react'
 import { Card ,Typography,Button} from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons';
 import Axios from 'axios';
-const {Title} = Typography
+import {Link} from 'react-router-dom'
 
+const {Title} = Typography
 
 class Products extends React.Component{
     state = {data : null}
@@ -55,9 +56,11 @@ class Products extends React.Component{
                                     Rp. {val.price}
                                 </div>
                                 <div className='mt-3'>
-                                    <Button type="primary" icon={<ArrowRightOutlined/>}>
-                                        See Detail
-                                    </Button>
+                                    <Link to={'/product-detail/' + val.product_id}>
+                                        <Button type="primary" icon={<ArrowRightOutlined/>}>
+                                                See Detail
+                                        </Button>
+                                    </Link>
                                 </div>
 
                             </div>
