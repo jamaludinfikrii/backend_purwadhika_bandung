@@ -3,7 +3,8 @@ import {Card, Button} from 'antd'
 import Axios from 'axios'
 
 class ProductDetail extends Component {
-    state = {data : null}
+    state = {data : null , dataSelected : null}
+
     componentDidMount(){
         this.getDataProduct()
     }
@@ -12,14 +13,30 @@ class ProductDetail extends Component {
         Axios.get('http://localhost:4000/product/' + id)
         .then((res) => {
             console.log(res.data)
-            this.setState({data : res.data.data})
+            this.setState({data : res.data.data, dataSelected : res.data.data[0]})
         })
         .catch((err) => {
             console.log(err)
         })
     }
+
+    renderListImage = () => {
+        let listImages = this.state.data
+        listImages= listImages.filter((val) => {
+            return val.image_id != this.state.dataSelected.image_id
+        })
+        return listImages.map((data) => {
+            return(
+             <div className='col-md-2' style={{height : "120px"}}>
+                 <Card className='h-100'>
+                     <img  onClick={() => this.setState({dataSelected : data})} src={"http://localhost:4000/" + data.image_url} style={{height :"80px",objectFit : "contain",cursor:'pointer'}} width='100%' alt="broken"/>
+                 </Card>
+             </div>
+            )
+        })
+    }
     render() {
-        if(this.state.data === null) return <h1>Loading ...</h1>
+        if(this.state.data === null || this.state.dataSelected === null) return <h1>Loading ...</h1>
         if(this.state.data.length === 0) return <h1>Data Kosong</h1>
         return (
             <div className='container'>
@@ -28,7 +45,7 @@ class ProductDetail extends Component {
                 <div className='row justify-content-center'>
                     <div className='col-md-6' style={{height : '50vh'}}>
                         <Card className='h-100'>
-                            <img src={"http://localhost:4000/" + this.state.data[0].image_url }style={{height :"45vh",objectFit : "contain"}} width='100%' alt="broken"/>
+                            <img src={"http://localhost:4000/" + this.state.dataSelected.image_url }style={{height :"45vh",objectFit : "contain"}} width='100%' alt="broken"/>
                         </Card>
                         <div className='text-center mt-3'>
                             <Button className='text-center' type='primary'>Edit Image</Button>
@@ -37,15 +54,9 @@ class ProductDetail extends Component {
                     </div>
                 </div>
                 <div className='row mt-5'>
-                   {this.state.data.slice(1).map((data) => {
-                       return(
-                        <div className='col-md-2' style={{height : "120px"}}>
-                            <Card className='h-100'>
-                                <img src={"http://localhost:4000/" + data.image_url} style={{height :"80px",objectFit : "contain"}} width='100%' alt="broken"/>
-                            </Card>
-                        </div>
-                       )
-                   })}
+                   {
+                       this.renderListImage()
+                   }
                 </div>
             </div>
         )
