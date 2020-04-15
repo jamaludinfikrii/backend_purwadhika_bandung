@@ -3,7 +3,7 @@ import {Card, Button} from 'antd'
 import Axios from 'axios'
 
 class ProductDetail extends Component {
-    state = {data : null , dataSelected : null}
+    state = {data : null , dataSelected : null , selectedImage: null}
 
     componentDidMount(){
         this.getDataProduct()
@@ -15,6 +15,7 @@ class ProductDetail extends Component {
             console.log(res.data)
             this.setState({data : res.data.data, dataSelected : res.data.data[0]})
         })
+
         .catch((err) => {
             console.log(err)
         })
@@ -23,7 +24,7 @@ class ProductDetail extends Component {
     renderListImage = () => {
         let listImages = this.state.data
         listImages= listImages.filter((val) => {
-            return val.image_id != this.state.dataSelected.image_id
+            return val.image_id !== this.state.dataSelected.image_id
         })
         return listImages.map((data) => {
             return(
@@ -34,6 +35,37 @@ class ProductDetail extends Component {
              </div>
             )
         })
+    }
+
+    onBtnSaveEditClick = () => {
+        console.log(this.state.dataSelected)
+        const image = this.refs.editImage.files[0]
+        const id_image = this.state.dataSelected.image_id
+        const path = this.state.dataSelected.image_url
+
+        console.log('masuk')
+
+        const fd = new FormData()
+        fd.append('editImage',image)
+        fd.append('path',path)
+        Axios.patch('http://localhost:4000/product/image/' + id_image, fd)
+        .then((res) => {
+            if(res.data.error === false){
+                alert(res.data.message)
+                this.setState({selectedImage : null})
+                this.getDataProduct()
+            }
+        })
+        .catch((err) => {
+
+        })
+        
+    
+    }
+    onChangeInputImage = () => {
+        // alert('masuk')
+        let image = this.refs.editImage.files[0]
+        this.setState({selectedImage : image.name})
     }
     render() {
         if(this.state.data === null || this.state.dataSelected === null) return <h1>Loading ...</h1>
@@ -48,8 +80,19 @@ class ProductDetail extends Component {
                             <img src={"http://localhost:4000/" + this.state.dataSelected.image_url }style={{height :"45vh",objectFit : "contain"}} width='100%' alt="broken"/>
                         </Card>
                         <div className='text-center mt-3'>
-                            <Button className='text-center' type='primary'>Edit Image</Button>
-                            <Button className='text-center' type='danger'>Delete Image</Button>
+                            <Button className='text-center' onClick={()=> this.refs.editImage.click()} type='primary'>
+                                { this.state.selectedImage === null ? 'Edit Image' : this.state.selectedImage}
+                            </Button>
+                            <input onChange={this.onChangeInputImage} accept='image/*' style={{display : "none"}} ref='editImage' type="file"/>
+                            {
+                                this.state.selectedImage === null ?
+                                <Button className='text-center' type='danger'>Delete Image</Button>
+                                :
+                                <span>
+                                    <Button className='text-center' onClick={this.onBtnSaveEditClick} type='ghost'>Save</Button>
+                                    <Button className='text-center' onClick={() => this.setState({selectedImage : null}) } type='danger'>Cancel</Button>
+                                </span>
+                            }
                         </div>
                     </div>
                 </div>

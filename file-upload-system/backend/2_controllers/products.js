@@ -208,9 +208,47 @@ const deleteImageById = (req,res) => {
 
 
 const editImageById = (req,res) => {
-    // edit image_url di database
+    const upload = fileUpload.single('editImage')
+    // post image to api
+    upload(req,res,(err) => {
+        try{
+            if(err) throw err
+
+            // check all the data needed
+            console.log(req.file)
+            const newPath = req.file.path
+            const oldPath = req.body.path
+            const idImage = req.params.id
+            console.log(newPath)
+            console.log(oldPath)
+            console.log(idImage)
+            let dataPath = {image_url : newPath}
+            // delete old image from api
+            fs.unlinkSync(oldPath)
+
+            // edit image path at database
+            let sql = 'update product_images set ? where id = ?'
+            db.query(sql,[ dataPath , idImage],(err,result) => {
+                try{
+                    if(err) throw err
+                    res.json({
+                        error : false,
+                        message : "Edit Data Success"
+                    })
+                }catch(err){
+                    console.log(err)
+                }
+            })
+
+
+
+        }catch(err){
+            console.log(err)
+        }
+    })
     // post image ke api
     // delete old image from api
+    // edit image_url di database
 }
 
 
@@ -220,5 +258,6 @@ module.exports = {
     getAllProducts,
     getProductById,
     postNewProduct,
-    deleteImageById
+    deleteImageById,
+    editImageById
 }
