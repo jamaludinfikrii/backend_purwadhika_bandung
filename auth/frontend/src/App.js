@@ -1,8 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Route} from 'react-router-dom'
-
-import './App.css';
 import Register from './pages/Register';
+import VerificationSuccess from './pages/VerificationSuccess';
 
 
 class App extends React.Component{
@@ -16,6 +15,9 @@ class App extends React.Component{
         </Route>
         <Route path='/register'>
           <Register />
+        </Route>
+        <Route path='/verification-success'>
+          <VerificationSuccess />
         </Route>
        
       </BrowserRouter>
