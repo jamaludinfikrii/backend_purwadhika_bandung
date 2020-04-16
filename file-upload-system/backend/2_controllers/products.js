@@ -219,10 +219,12 @@ const editImageById = (req,res) => {
             const newPath = req.file.path
             const oldPath = req.body.path
             const idImage = req.params.id
+            
             console.log(newPath)
             console.log(oldPath)
             console.log(idImage)
             let dataPath = {image_url : newPath}
+            
             // delete old image from api
             fs.unlinkSync(oldPath)
 
@@ -251,6 +253,14 @@ const editImageById = (req,res) => {
     // edit image_url di database
 }
 
+
+
+// Afterclass task
+    // Delete image
+    
+    // Delete Product
+        // delete product info => name,price,deskripsi
+        // delete product images => di database (path) dan di api (file)
 
 
 
