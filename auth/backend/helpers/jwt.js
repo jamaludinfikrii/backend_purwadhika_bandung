@@ -12,7 +12,7 @@ require('dotenv').config()
 // const decoded = jwt.verify('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphbWFsdWRpbmZpa3JpaUBnbWFpbC5jb20iLCJpZCI6OSwiaWF0IjoxNTg3MDk1MjQ4fQ.622WFR_nE48I3q62GBKCjfNv6PsdzovB48poqs6-c6M', '123rahasia')
 
 // console.log(token)
-console.log(decoded)
+// console.log(decoded)
 
 
 function createJwt (payload) {

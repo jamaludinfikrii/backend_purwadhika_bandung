@@ -106,9 +106,12 @@ function testNodemailer (req,res){
 
 
 function verify (req,res) {
-    const id = req.params.id
-    let sqlUpdate = 'update users set verified = 1 where id = ?'
-    db.query(sqlUpdate, id, (err,result) => {
+    const token = req.params.token
+    const dataToken = decodeToken(token)
+    console.log(dataToken)
+
+    let sqlUpdate = 'update users set verified = 1 where id = ? and email = ?;'
+    db.query(sqlUpdate, [dataToken.id, dataToken.email], (err,result) => {
         if(err) throw err
         res.json({
             error : false,
