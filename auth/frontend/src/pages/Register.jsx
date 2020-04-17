@@ -24,24 +24,24 @@ export default class Register extends Component {
                     }else  if(res.data.error === true){
                         alert(res.data.message)
                     }
-                    this.refs.email.value = ''
-                    this.refs.password.value = ''
-                    this.refs.confirm.value = ''
-                    this.setState({loading : false})
+                    
                 })
                 .catch((err) => {
-                    console.log(err)
-                    this.refs.email.value = ''
-                    this.refs.password.value = ''
-                    this.refs.confirm.value = ''
-                    this.setState({loading : false})
+                    alert(err.message)
+                   
                 })
             }else{
-                return alert('password dan konfirm harus sama')
+                alert('password dan konfirm harus sama')
+                
             }
         }else{
-            return alert('semua form harus terisi')
+            alert('semua form harus terisi')
         }
+
+        this.refs.email.value = ''
+        this.refs.password.value = ''
+        this.refs.confirm.value = ''
+        this.setState({loading : false})
     }
     render() {
         return (

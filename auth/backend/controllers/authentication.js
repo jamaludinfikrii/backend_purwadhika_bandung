@@ -117,8 +117,42 @@ function verify (req,res) {
 }
 
 
+
+function login (req,res){
+    // ambil data nya pake req
+    const data = req.body // {password : 123123, email : fikri@fikri.com}
+
+    // hash password
+    const afterHashing = passwordHasher(data.password)
+    data.password  = afterHashing
+
+
+    // jalanin query
+    let sql = 'select * from users where email = ? and password = ?;'
+    db.query(sql, [data.email , data.password ] , (err,result) => {
+        try{
+            if(err) throw err
+            if(result.length === 0) throw {error : true , message : "Username or Email Invalid"}
+            if(result[0].verified === 0) throw {error : true,message : "Email Belum di Verifikasi, silahkan verifikasi terlebih dahulu"}
+            res.json({
+                error : false,
+                message : "Login Success",
+                data : result
+            })
+        }catch(err){
+            res.json({
+                error : true,
+                message : err.message
+            })
+        }
+    })
+    // if user ada dan password ada res success
+    // else res. failed
+}
+
 module.exports ={
     register : Register,
     testNodemailer,
-    verify
+    verify,
+    login
 }

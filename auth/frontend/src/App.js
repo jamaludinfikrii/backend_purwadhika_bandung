@@ -3,6 +3,7 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import Register from './pages/Register';
 import VerificationSuccess from './pages/VerificationSuccess';
 import FarmHubNavbar from './component/Navbar';
+import Login from './pages/Login';
 
 
 class App extends React.Component{
@@ -17,6 +18,9 @@ class App extends React.Component{
         </Route>
         <Route path='/register'>
           <Register />
+        </Route>
+        <Route path='/login'>
+          <Login />
         </Route>
         <Route path='/verification-success'>
           <VerificationSuccess />

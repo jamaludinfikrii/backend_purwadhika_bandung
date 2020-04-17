@@ -36,7 +36,7 @@ class FarmHubNavbar extends React.Component{
                     </Nav>
                     <Nav navbar> 
                         <NavItem>
-                            <NavLink to='/' >Login</NavLink >
+                            <NavLink href='/login' >Login</NavLink >
                         </NavItem>
                     </Nav>
                     <Nav navbar> 
