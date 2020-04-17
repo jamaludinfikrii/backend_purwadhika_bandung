@@ -1,7 +1,7 @@
 const db = require('./../database/mysql')
 const passwordHasher = require('./../helpers/hashing')
 const transporter = require('./../helpers/nodemailerTransporter')
-
+const {createJwt,decodeToken} = require('./../helpers/jwt')
 
 function Register(req,res){
     const data = req.body // {email : fikri@fikril.com , password : 123123}
@@ -32,13 +32,14 @@ function Register(req,res){
                     try{
                         if(err) throw err
 
+                        const token = createJwt({email : data.email , id : result.insertId})
                         // send email verification to user
                         transporter.sendMail({
                             from : "Toko Berkah",
                             to : data.email,
                             subject : "VERIFY YOUR EMAIL NOW !!!",
                             html : `
-                                <h1> Click Link <a href='http://localhost:3000/verification-success/${result.insertId}'> Here </a> to verify your email
+                                <h1> Click Link <a href='http://localhost:3000/verification-success/${token}'> Here </a> to verify your email
                             `
                         }).then((response) => {
                             res.json({

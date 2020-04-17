@@ -9,4 +9,5 @@ function hashPass (pass){
 }
 
 
+
 module.exports = hashPass
