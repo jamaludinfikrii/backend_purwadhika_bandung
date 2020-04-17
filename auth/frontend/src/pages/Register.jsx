@@ -16,6 +16,8 @@ export default class Register extends Component {
                     console.log(res)
                     if(res.data.error === false){
                         alert(res.data.message)
+                    }else  if(res.data.error === true){
+                        alert(res.data.message)
                     }
                 })
                 .catch((err) => {

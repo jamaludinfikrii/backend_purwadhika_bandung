@@ -2,12 +2,14 @@ import React from 'react';
 import {BrowserRouter, Route} from 'react-router-dom'
 import Register from './pages/Register';
 import VerificationSuccess from './pages/VerificationSuccess';
+import FarmHubNavbar from './component/Navbar';
 
 
 class App extends React.Component{
   render(){
     return(
       <BrowserRouter>
+      <FarmHubNavbar />
        <Route path='/' exact>
           <div>
             Hello World

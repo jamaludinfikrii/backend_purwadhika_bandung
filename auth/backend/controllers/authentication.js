@@ -40,6 +40,14 @@ function Register(req,res){
                             html : `
                                 <h1> Click Link <a href='http://localhost:3000/verification-success/${result.insertId}'> Here </a> to verify your email
                             `
+                        }).then((response) => {
+                            res.json({
+                                error :false,
+                                message : "Register Success, Check your Email to Verify"
+                            })
+                        })
+                        .catch((err) => {
+                            console.log(err)
                         })
                     
 
