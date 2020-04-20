@@ -36,6 +36,41 @@ function getAllProducts (req,res) {
 }
 
 
+
+function postNewProduct(req,res){
+    const token = req.token
+    try{
+        const dataDecoded = jwt.verify(token,process.env.JWT_SECRET)
+        console.log(dataDecoded) // info user yang punya token // payload 
+        if(dataDecoded.role !== 'admin') throw {message : "user must be admin"}
+
+        const data = req.body
+        let sql = 'insert into products set ?'
+        db.query(sql, data,(err,result) => {
+            try{
+                if(err) throw err
+                res.json({
+                    error : false,
+                    message : "Post Data Success"
+                })
+            }catch(err){
+                res.json({
+                    error : true,
+                    message :err.message
+                })
+            }
+        })
+
+    }catch(err){
+        res.json({
+            error : true,
+            message :err.message
+        })
+    }
+}
+
+
 module.exports ={
-    getAllProducts
+    getAllProducts,
+    postNewProduct
 }
