@@ -16,7 +16,7 @@ require('dotenv').config()
 
 
 function createJwt (payload) {
-    const token = jwt.sign(payload , process.env.JWT_SECRET)
+    const token = jwt.sign(payload , process.env.JWT_SECRET )
     return token
 }
 

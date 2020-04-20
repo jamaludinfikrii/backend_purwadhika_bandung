@@ -4,6 +4,7 @@ import Register from './pages/Register';
 import VerificationSuccess from './pages/VerificationSuccess';
 import FarmHubNavbar from './component/Navbar';
 import Login from './pages/Login';
+import ProductList from './pages/ProductList';
 
 
 class App extends React.Component{
@@ -21,6 +22,9 @@ class App extends React.Component{
         </Route>
         <Route path='/login'>
           <Login />
+        </Route>
+        <Route path='/product-list'>
+          <ProductList />
         </Route>
         <Route path='/verification-success'>
           <VerificationSuccess />

@@ -18,7 +18,10 @@ export default class Login extends Component {
         if(email && password){
             Axios.post('http://localhost:4000/auth/login' , data)
             .then((res) => {
+                console.log(res.data)
+                localStorage.setItem('token' , res.data.token)
                 alert(res.data.message)
+                window.location = '/product-list'
             })
             .catch((err) => {
                 alert(err.message)

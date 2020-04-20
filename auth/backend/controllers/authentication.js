@@ -104,6 +104,12 @@ function testNodemailer (req,res){
 
 }
 
+// universal cookies
+// jwt buat protect api route
+// deployment
+// eer diagram
+// mongo db & mongoose
+
 
 function verify (req,res) {
     const token = req.params.token
@@ -131,17 +137,31 @@ function login (req,res){
     data.password  = afterHashing
 
 
+    // check last login kapan? kalo udah lama, kirim email buat verifikasi
+    // check device info, apabila device nya berbeda, kirim email buat verifikasi (os module)
+
+    // device info , last login
+
+
+    // email verification, itu gak melulu link
+    // kalian bisa kirim kode verifikasi, 
+
     // jalanin query
     let sql = 'select * from users where email = ? and password = ?;'
     db.query(sql, [data.email , data.password ] , (err,result) => {
         try{
             if(err) throw err
-            if(result.length === 0) throw {error : true , message : "Username or Email Invalid"}
+            if(result.length === 0) throw {error : true , message : "Password or Email Invalid"}
             if(result[0].verified === 0) throw {error : true,message : "Email Belum di Verifikasi, silahkan verifikasi terlebih dahulu"}
+            const dataUser = result[0]
+            console.log(dataUser)
+            const token = createJwt({id : dataUser.id, email : dataUser.email , role : dataUser.role})
+
             res.json({
                 error : false,
                 message : "Login Success",
-                data : result
+                data : {id : dataUser.id, email : dataUser.email , role : dataUser.role},
+                token : token
             })
         }catch(err){
             res.json({
@@ -152,6 +172,8 @@ function login (req,res){
     })
     // if user ada dan password ada res success
     // else res. failed
+    
+
 }
 
 module.exports ={
