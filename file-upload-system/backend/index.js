@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = 4000
+const PORT = process.env.PORT || 5000
 const cors = require('cors')
 
 const db = require('./3_databases/mysql')
@@ -26,8 +26,8 @@ app.get('/' , (req,res) => {
 })
 
 
-app.listen(port , () => {
-    console.log('server running on port ' + port)
+app.listen(PORT , () => {
+    console.log('server running on port ' + PORT)
 })
 
 
