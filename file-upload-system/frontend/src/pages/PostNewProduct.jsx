@@ -30,7 +30,7 @@ class PostNewProduct extends React.Component{
       fd.append('productData' , data )
       console.log(fd)
 
-      Axios.post('http://localhost:4000/product', fd )
+      Axios.post('https://file-upload-system-fikri.herokuapp.com/product', fd )
       .then((res) => {
         console.log(res.data)
         alert(res.data.message)

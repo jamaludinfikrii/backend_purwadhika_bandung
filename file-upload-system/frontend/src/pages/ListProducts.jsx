@@ -13,7 +13,7 @@ class Products extends React.Component{
     }
 
     getAllProducts = () => {
-        Axios.get('http://localhost:4000/product')
+        Axios.get('https://file-upload-system-fikri.herokuapp.com/product')
         .then((res) => {
             console.log(res.data)
             let newData = []
@@ -46,7 +46,7 @@ class Products extends React.Component{
                     <Card>
                         <div style={{height : "120px"}} className='row'> 
                             <div className='col-6 h-100'>
-                                <img alt='broken' width='100%' style={{objectFit :"cover",objectPosition :"top",height:'100%'}} src={'http://localhost:4000/' + val.image_url} />
+                                <img alt='broken' width='100%' style={{objectFit :"cover",objectPosition :"top",height:'100%'}} src={'https://file-upload-system-fikri.herokuapp.com/' + val.image_url} />
                             </div>
                             <div className='col-6'>
                                 <Title level={4}>

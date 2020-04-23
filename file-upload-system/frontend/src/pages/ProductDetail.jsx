@@ -10,7 +10,7 @@ class ProductDetail extends Component {
     }
     getDataProduct = () => {
         const id = window.location.pathname.split('/')[2]
-        Axios.get('http://localhost:4000/product/' + id)
+        Axios.get('https://file-upload-system-fikri.herokuapp.com/product/' + id)
         .then((res) => {
             console.log(res.data)
             this.setState({data : res.data.data, dataSelected : res.data.data[0]})
@@ -30,7 +30,7 @@ class ProductDetail extends Component {
             return(
              <div className='col-md-2' style={{height : "120px"}}>
                  <Card className='h-100'>
-                     <img  onClick={() => this.setState({dataSelected : data})} src={"http://localhost:4000/" + data.image_url} style={{height :"80px",objectFit : "contain",cursor:'pointer'}} width='100%' alt="broken"/>
+                     <img  onClick={() => this.setState({dataSelected : data})} src={"https://file-upload-system-fikri.herokuapp.com/" + data.image_url} style={{height :"80px",objectFit : "contain",cursor:'pointer'}} width='100%' alt="broken"/>
                  </Card>
              </div>
             )
@@ -48,7 +48,7 @@ class ProductDetail extends Component {
         const fd = new FormData()
         fd.append('editImage',image)
         fd.append('path',path)
-        Axios.patch('http://localhost:4000/product/image/' + id_image, fd)
+        Axios.patch('https://file-upload-system-fikri.herokuapp.com/product/image/' + id_image, fd)
         .then((res) => {
             if(res.data.error === false){
                 alert(res.data.message)
@@ -77,7 +77,7 @@ class ProductDetail extends Component {
                 <div className='row justify-content-center'>
                     <div className='col-md-6' style={{height : '50vh'}}>
                         <Card className='h-100'>
-                            <img src={"http://localhost:4000/" + this.state.dataSelected.image_url }style={{height :"45vh",objectFit : "contain"}} width='100%' alt="broken"/>
+                            <img src={"https://file-upload-system-fikri.herokuapp.com/" + this.state.dataSelected.image_url }style={{height :"45vh",objectFit : "contain"}} width='100%' alt="broken"/>
                         </Card>
                         <div className='text-center mt-3'>
                             <Button className='text-center' onClick={()=> this.refs.editImage.click()} type='primary'>
